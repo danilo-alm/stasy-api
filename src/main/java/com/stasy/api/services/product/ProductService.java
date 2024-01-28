@@ -49,6 +49,10 @@ public class ProductService {
         repository.save(product);
     }
 
+    public void deleteProduct(Long id) {
+        repository.deleteById(id);
+    }
+
     public List<Product> getProductByNameContains(String substring) {
         return repository.findByNameContains(substring).orElse(new ArrayList<>());
     }

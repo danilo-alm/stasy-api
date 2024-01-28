@@ -89,4 +89,10 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProductsByQuantityGreaterThanEqual(@PathVariable long quantity) {
         return ResponseEntity.ok().body(service.getProductsByQuantityGreaterThanOrEqualTo(quantity));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        service.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
 }
