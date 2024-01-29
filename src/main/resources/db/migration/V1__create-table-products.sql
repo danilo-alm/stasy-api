@@ -1,9 +1,8 @@
 CREATE TABLE product (
-    id int NOT NULL AUTO_INCREMENT,
-    name varchar(150) NOT NULL,
-    manufacturer varchar(150) NOT NULL,
-    category varchar(50) NOT NULL,
-    price decimal(7, 2),
-    quantity int NOT NULL,
-    PRIMARY KEY (id)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(150) NOT NULL,
+    manufacturer VARCHAR(150) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    price DECIMAL(7, 2),
+    quantity INT NOT NULL
 );

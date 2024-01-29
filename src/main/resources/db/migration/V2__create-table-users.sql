@@ -1,0 +1,6 @@
+CREATE TABLE users (
+    id CHAR(36) PRIMARY KEY NOT NULL,
+    login VARCHAR(36) NOT NULL UNIQUE,
+    password CHAR(60) BINARY NOT NULL,
+    role VARCHAR(30) NOT NULL
+);
