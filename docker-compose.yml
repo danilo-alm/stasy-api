@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MARIADB_HOST=mariadb
+      - MARIADB_PORT=3306
+      - MARIADB_DATABASE=stasy
+      - MARIADB_USER=root
+      - MARIADB_PASSWORD=root
+      - API_ADMIN_USERNAME=admin
+      - API_ADMIN_PASSWORD=admin
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: stasy
+    volumes:
+      - ./mariadb:/var/lib/mysql
