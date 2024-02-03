@@ -4,8 +4,8 @@ import com.stasy.api.dtos.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name="product")
-@Entity(name="product")
+@Table(name="Products")
+@Entity(name="Products")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
