@@ -1,4 +1,4 @@
-package com.stasy.api.services;
+package com.stasy.api.services.product;
 
 public class ProductNotFoundException extends RuntimeException {
 

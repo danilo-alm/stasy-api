@@ -1,6 +1,6 @@
 package com.stasy.api.controllers.product;
 
-import com.stasy.api.services.ProductNotFoundException;
+import com.stasy.api.services.product.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

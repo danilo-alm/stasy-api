@@ -1,4 +1,4 @@
-package com.stasy.api.controllers;
+package com.stasy.api.controllers.authentication;
 
 import com.stasy.api.domain.user.User;
 import com.stasy.api.dtos.AuthenticationDTO;

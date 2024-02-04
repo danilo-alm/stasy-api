@@ -1,4 +1,4 @@
-package com.stasy.api.services;
+package com.stasy.api.services.product;
 
 import com.stasy.api.domain.product.Product;
 import com.stasy.api.domain.product.ProductCategory;

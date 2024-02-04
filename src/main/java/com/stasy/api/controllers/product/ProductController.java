@@ -4,7 +4,7 @@ import com.stasy.api.domain.product.Product;
 import com.stasy.api.domain.product.ProductCategory;
 import com.stasy.api.dtos.ProductDTO;
 import com.stasy.api.infra.ApiConstants;
-import com.stasy.api.services.ProductService;
+import com.stasy.api.services.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

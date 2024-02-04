@@ -1,4 +1,4 @@
-package com.stasy.api.services;
+package com.stasy.api.services.authorization;
 
 import com.stasy.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
