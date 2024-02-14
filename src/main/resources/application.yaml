@@ -1,0 +1,25 @@
+security:
+  jwt:
+    secret-key: verysecretkeyohmygodwhyisitsosecretdonttellanybody
+  admin:
+    password: ${API_ADMIN_PASSWORD:admin}
+    username: ${API_ADMIN_USERNAME:admin}
+logging:
+  level:
+    root: warn
+spring:
+  datasource:
+    password: ${MARIADB_PASSWORD:123}
+    url: jdbc:mysql://${MARIADB_HOST:localhost}:${MARIADB_PORT:3306}/${MARIADB_DATABASE:stasy}
+    username: ${MARIADB_USER:stasy}
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: false
+  main:
+    banner-mode: 'off'

@@ -14,10 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class CreateUserAdmin {
-    @Value("${api.security.admin.username}")
+    @Value("${security.admin.username}")
     private String adminUserName;
 
-    @Value("${api.security.admin.password}")
+    @Value("${security.admin.password}")
     private String adminUserPassword;
     private static final Logger log = LoggerFactory.getLogger(CreateUserAdmin.class);
 
