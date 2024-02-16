@@ -1,4 +1,4 @@
-package com.stasy.api.controllers;
+package com.stasy.api.controllers.exceptionhandlers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +12,7 @@ public class GlobalControllerExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
-    String productNotFoundHandler(Exception ex) {
+    String genericExceptionHandler(Exception ex) {
         return ex.getMessage();
     }
 }

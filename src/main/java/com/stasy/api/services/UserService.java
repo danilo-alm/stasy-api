@@ -1,4 +1,4 @@
-package com.stasy.api.services.user;
+package com.stasy.api.services;
 
 import com.stasy.api.domain.user.User;
 import com.stasy.api.repositories.UserRepository;

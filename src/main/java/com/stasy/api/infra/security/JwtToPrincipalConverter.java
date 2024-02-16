@@ -1,4 +1,4 @@
-package com.stasy.api.security;
+package com.stasy.api.infra.security;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

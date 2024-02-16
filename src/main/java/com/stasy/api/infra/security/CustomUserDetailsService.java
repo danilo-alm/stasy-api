@@ -1,7 +1,7 @@
-package com.stasy.api.security;
+package com.stasy.api.infra.security;
 
 import com.stasy.api.domain.user.User;
-import com.stasy.api.services.user.UserService;
+import com.stasy.api.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

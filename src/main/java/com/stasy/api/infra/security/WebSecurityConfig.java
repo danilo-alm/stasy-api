@@ -1,8 +1,9 @@
-package com.stasy.api.security;
+package com.stasy.api.infra.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,8 +32,15 @@ public class WebSecurityConfig {
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.formLogin(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(request -> request
-					.requestMatchers("/auth/login").permitAll()
-					.anyRequest().authenticated())
+				.requestMatchers("/auth/login").permitAll()
+				.requestMatchers(HttpMethod.DELETE, "/auth/register").hasRole("ADMIN")
+
+				.requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+
+
+				.anyRequest().authenticated())
 			.build();
 	}
 

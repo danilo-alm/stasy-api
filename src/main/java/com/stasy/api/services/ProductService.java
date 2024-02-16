@@ -1,9 +1,10 @@
-package com.stasy.api.services.product;
+package com.stasy.api.services;
 
 import com.stasy.api.domain.product.Product;
 import com.stasy.api.domain.product.ProductCategory;
 import com.stasy.api.dtos.ProductDTO;
 import com.stasy.api.repositories.ProductRepository;
+import com.stasy.api.services.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

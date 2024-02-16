@@ -1,4 +1,4 @@
-package com.stasy.api.security;
+package com.stasy.api.infra.security;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 

@@ -3,11 +3,10 @@ package com.stasy.api.services;
 import com.stasy.api.domain.user.User;
 import com.stasy.api.domain.user.UserRole;
 import com.stasy.api.dtos.LoginResponseDTO;
-import com.stasy.api.security.JwtIssuer;
-import com.stasy.api.security.UserPrincipal;
-import com.stasy.api.services.user.UserService;
+import com.stasy.api.infra.security.JwtIssuer;
+import com.stasy.api.infra.security.UserPrincipal;
+import com.stasy.api.services.exceptions.UserAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,16 +36,12 @@ public class AuthService {
         return new LoginResponseDTO(token);
     }
 
-    public void register(String login, String password, String name, String role) throws Exception {
-        if (this.userService.getUserByLogin(login).isEmpty()) throw new Exception("User already exists");
+    public void register(String login, String password, UserRole role) {
+        if (this.userService.getUserByLogin(login).isPresent()) throw new UserAlreadyExistsException(login);
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(password);
-        User newUser;
-        try {
-            newUser = new User(login, encryptedPassword, UserRole.valueOf(role.toUpperCase()));
-        } catch (IllegalArgumentException e) {  // thrown by UserRole.valueOf
-            throw new Exception("Invalid role");
-        }
+        User newUser = new User(login, encryptedPassword, role);
+
         this.userService.save(newUser);
     }
 }

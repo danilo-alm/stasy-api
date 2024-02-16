@@ -1,4 +1,4 @@
-package com.stasy.api.security;
+package com.stasy.api.infra.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
