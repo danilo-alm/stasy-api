@@ -23,15 +23,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @NotBlank(message = "Login is mandatory")
+//    @NotBlank(message = "Login is mandatory")
     private String login;
 
     @JsonIgnore
-    @NotBlank(message = "Password is mandatory")
+//    @NotBlank(message = "Password is mandatory")
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @NotBlank(message = "Role is mandatory")
+//    @NotBlank(message = "Role is mandatory")
     private UserRole role;
 
     public User(String login, String password, UserRole role) {

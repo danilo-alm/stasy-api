@@ -9,9 +9,9 @@ logging:
     root: warn
 spring:
   datasource:
-    password: ${MARIADB_PASSWORD:123}
     url: jdbc:mysql://${MARIADB_HOST:localhost}:${MARIADB_PORT:3306}/${MARIADB_DATABASE:stasy}
     username: ${MARIADB_USER:stasy}
+    password: ${MARIADB_PASSWORD:123}
   jpa:
     hibernate:
       ddl-auto: none

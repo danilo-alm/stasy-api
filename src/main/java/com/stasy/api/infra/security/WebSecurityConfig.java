@@ -32,13 +32,17 @@ public class WebSecurityConfig {
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.formLogin(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(request -> request
+
 				.requestMatchers("/auth/login").permitAll()
+
+				.requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/auth/register").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/auth/register").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/auth/register").hasRole("ADMIN")
 
-				.requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
-
+				.requestMatchers(HttpMethod.POST, "/products**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/products**").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/products**").hasRole("ADMIN")
 
 				.anyRequest().authenticated())
 			.build();

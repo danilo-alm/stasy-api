@@ -26,7 +26,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
           .map(jwtDecoder::decode)
           .map(jwtToPrincipalConverter::convert)
           .map(UserPrincipalAuthenticationToken::new)
-          .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
+          .ifPresent(authentication ->
+          {
+              SecurityContextHolder.getContext().setAuthentication(authentication);
+              System.out.println("User authenticated: " + authentication.getName() + " with roles: " + authentication.getAuthorities());
+          });
 
         filterChain.doFilter(request, response);
     }

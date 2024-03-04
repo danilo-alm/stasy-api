@@ -28,12 +28,8 @@ public class AuthenticationController {
 
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
-		try {
-			authService.register(data.login(), data.password(), data.role());
-			return ResponseEntity.status(HttpStatus.CREATED).build();
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+		authService.register(data.login(), data.password(), data.role());
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }
 
