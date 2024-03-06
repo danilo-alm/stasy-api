@@ -1,0 +1,7 @@
+CREATE TABLE Sales (
+    ID INT PRIMARY KEY,
+    Date DATE NOT NULL,
+    CustomerName VARCHAR(255) NOT NULL,
+    SellerID VARCHAR(36) NOT NULL,
+    FOREIGN KEY (SellerID) REFERENCES Users(ID)
+);

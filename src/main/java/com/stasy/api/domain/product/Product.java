@@ -15,11 +15,21 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "Name", nullable = false)
     private String name;
+
+    @Column(name = "Manufacturer", nullable = false)
     private String manufacturer;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "Category", nullable = false)
     private ProductCategory category;
+
+    @Column(name = "Price", nullable = false)
     private double price;
+
+    @Column(name = "Quantity", nullable = false)
     private long quantity;
 
     public Product(ProductDTO data) {

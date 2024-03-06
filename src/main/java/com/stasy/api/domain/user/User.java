@@ -20,9 +20,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
+    @Column(name = "Login", nullable = false, unique = true)
     private String login;
+
+    @Column(name = "Password", nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "Role", nullable = false)
     private UserRole role;
 
     public User(String login, String password, UserRole role) {
