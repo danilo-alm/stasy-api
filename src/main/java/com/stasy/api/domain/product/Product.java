@@ -4,6 +4,8 @@ import com.stasy.api.dtos.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Table(name="Products")
 @Entity(name="Products")
 @NoArgsConstructor
@@ -27,7 +29,7 @@ public class Product {
     private ProductCategory category;
 
     @Column(name = "Price", nullable = false)
-    private double price;
+    private BigDecimal price;
 
     @Column(name = "Quantity", nullable = false)
     private long quantity;

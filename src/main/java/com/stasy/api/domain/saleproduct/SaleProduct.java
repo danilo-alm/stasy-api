@@ -5,6 +5,8 @@ import com.stasy.api.domain.sale.Sale;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Table(name = "SaleProducts")
 @Entity(name = "SaleProducts")
 @Getter
@@ -17,19 +19,24 @@ public class SaleProduct {
     @EmbeddedId
     private SaleProductKey id;
 
-    @ManyToOne
-    @MapsId("saleId")
-    @JoinColumn(name = "SaleID")
-    private Sale sale;
-
-    @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "ProductID")
-    private Product product;
-
     @Column(name = "Quantity", nullable = false)
     private int quantity;
 
     @Column(name = "Price", nullable = false)
-    private double price;
+    private BigDecimal price;
+
+    public SaleProduct(SaleProductKey saleProductKey, BigDecimal price, int quantity) {
+        this.id = saleProductKey;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "SaleProduct{" +
+            "id=" + id +
+            ", quantity=" + quantity +
+            ", price=" + price +
+            '}';
+    }
 }
