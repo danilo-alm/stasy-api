@@ -49,6 +49,10 @@ public class ProductService {
         repository.save(product);
     }
 
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
+
     public void deleteProduct(Long id) {
         repository.deleteById(id);
     }

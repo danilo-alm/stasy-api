@@ -1,7 +1,5 @@
 package com.stasy.api.domain.saleproduct;
 
-import com.stasy.api.domain.product.Product;
-import com.stasy.api.domain.sale.Sale;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(of = "id")
 public class SaleProduct {
 
@@ -22,21 +21,16 @@ public class SaleProduct {
     @Column(name = "Quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "Price", nullable = false)
-    private BigDecimal price;
+    @Column(name = "UnitPrice", nullable = false)
+    private BigDecimal unitPrice;
 
-    public SaleProduct(SaleProductKey saleProductKey, BigDecimal price, int quantity) {
-        this.id = saleProductKey;
-        this.price = price;
+    public SaleProduct(Long saleId, Long productId, BigDecimal unitPrice, int quantity) {
+        this.id = new SaleProductKey(saleId, productId);
+        this.unitPrice = unitPrice;
         this.quantity = quantity;
     }
 
-    @Override
-    public String toString() {
-        return "SaleProduct{" +
-            "id=" + id +
-            ", quantity=" + quantity +
-            ", price=" + price +
-            '}';
+    public BigDecimal getTotal() {
+        return unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
 }

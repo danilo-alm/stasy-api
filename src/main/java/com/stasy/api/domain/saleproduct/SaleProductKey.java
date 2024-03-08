@@ -1,33 +1,24 @@
 package com.stasy.api.domain.saleproduct;
 
-import com.stasy.api.domain.product.Product;
-import com.stasy.api.domain.sale.Sale;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @Embeddable
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"sale", "product"})
+@EqualsAndHashCode(of = {"saleId", "productId"})
+@ToString
 public class SaleProductKey implements Serializable {
+    @Column(name = "SaleID", nullable = false)
+    private Long saleId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SaleID")
-    private Sale sale;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductID")
-    private Product product;
-
-    @Override
-    public String toString() {
-        return "SaleProductKey{" +
-            "sale=" + sale +
-            ", product=" + product +
-            '}';
-    }
+    @Column(name = "ProductID", nullable = false)
+    private Long productId;
 }

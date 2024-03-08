@@ -3,25 +3,24 @@ package com.stasy.api.services.sale;
 import com.stasy.api.domain.product.Product;
 import com.stasy.api.domain.sale.Sale;
 import com.stasy.api.domain.saleproduct.SaleProduct;
-import com.stasy.api.domain.saleproduct.SaleProductKey;
 import com.stasy.api.domain.user.User;
 import com.stasy.api.dtos.SaleDTO;
 import com.stasy.api.repositories.SaleProductRepository;
 import com.stasy.api.repositories.SaleRepository;
-import com.stasy.api.services.product.ProductNotFoundException;
 import com.stasy.api.services.product.ProductService;
 import com.stasy.api.services.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
 public class SaleService {
+
     private SaleRepository saleRepository;
     private SaleProductRepository saleProductRepository;
     private UserService userService;
@@ -35,26 +34,53 @@ public class SaleService {
         return saleRepository.findById(id).orElseThrow(() -> new SaleNotFoundException(id));
     }
 
-    public Sale createSale(SaleDTO data) {
-        User seller = userService.getUserById(data.sellerId());
-        BigDecimal total = BigDecimal.ZERO;
+    public List<Sale> getByDate(LocalDateTime date) {
+        return saleRepository.findByDate(date).orElse(new ArrayList<>());
+    }
 
-        Sale sale = new Sale(data.customerName(), seller, BigDecimal.ZERO);
+    public List<Sale> getByDateBefore(LocalDateTime date) {
+        return saleRepository.findByDateBefore(date).orElse(new ArrayList<>());
+    }
+
+    public List<Sale> getByDateAfter(LocalDateTime date) {
+        return saleRepository.findByDateAfter(date).orElse(new ArrayList<>());
+    }
+
+    public List<Sale> getByDateBetween(LocalDateTime start, LocalDateTime end) {
+        return saleRepository.findByDateBetween(start, end).orElse(new ArrayList<>());
+    }
+
+    public Sale createSale(SaleDTO data) {
+
+        userService.getUserById(data.sellerId());
+
+        Sale sale = new Sale(data.customerName(), data.sellerId(), BigDecimal.ZERO);
+        saleRepository.save(sale);
+
+        BigDecimal total = createSaleProducts(data, sale);
+        sale.setTotal(total);
+        saleRepository.save(sale);
+
+        return sale;
+    }
+
+    public BigDecimal createSaleProducts(SaleDTO data, Sale sale) {
+        BigDecimal total = sale.getTotal();
         List<SaleProduct> saleProducts = new ArrayList<>();
 
         for (var entry : data.products().entrySet()) {
-            Product product = productService.getProductById(entry.getKey());
-            BigDecimal price = product.getPrice();
-            SaleProductKey saleProductKey = new SaleProductKey(sale, product);
-            SaleProduct saleProduct = new SaleProduct(saleProductKey, price, entry.getValue());
+            SaleProduct saleProduct = createSaleProduct(entry.getKey(), entry.getValue(), sale);
             saleProducts.add(saleProduct);
-            total = total.add(price.multiply(BigDecimal.valueOf(entry.getValue())));
+            total = total.add(saleProduct.getTotal());
         }
 
-        sale.setTotal(total);
-
-        saleRepository.save(sale);
         saleProductRepository.saveAll(saleProducts);
-        return sale;
+        return total;
+    }
+
+    public SaleProduct createSaleProduct(Long productId, Integer quantity, Sale sale) {
+        Product product = productService.getProductById(productId);
+        BigDecimal price = product.getPrice();
+        return new SaleProduct(sale.getId(), product.getId(), price, quantity);
     }
 }
