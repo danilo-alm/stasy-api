@@ -1,5 +1,7 @@
 package com.stasy.api.controllers.sale;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.stasy.api.domain.Views;
 import com.stasy.api.domain.sale.Sale;
 import com.stasy.api.dtos.SaleDTO;
 import com.stasy.api.infra.ApiConstants;
@@ -28,12 +30,12 @@ public class SaleController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping
-    public ResponseEntity<Void> updateSale(@PathVariable Long id, @RequestBody SaleDTO data) {
-        Sale newSale = service.createSale(data);
-        URI location = URI.create(ApiConstants.PRODUCT_BASE_URI + "/" + newSale.getId());
-        return ResponseEntity.created(location).build();
-    }
+//    @PutMapping
+//    public ResponseEntity<Void> updateSale(@PathVariable Long id, @RequestBody SaleDTO data) {
+//        Sale newSale = service.createSale(data);
+//        URI location = URI.create(ApiConstants.PRODUCT_BASE_URI + "/" + newSale.getId());
+//        return ResponseEntity.created(location).build();
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Sale> getSaleById(@PathVariable Long id) {
@@ -42,6 +44,7 @@ public class SaleController {
     }
 
     @GetMapping
+    @JsonView(Views.QueryingSales.class)
     public ResponseEntity<List<Sale>> getByDate(
             @RequestParam(value="start", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

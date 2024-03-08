@@ -16,13 +16,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
 public class SaleService {
 
     private SaleRepository saleRepository;
-    private SaleProductRepository saleProductRepository;
     private UserService userService;
     private ProductService productService;
 
@@ -52,35 +52,35 @@ public class SaleService {
 
     public Sale createSale(SaleDTO data) {
 
-        userService.getUserById(data.sellerId());
-
-        Sale sale = new Sale(data.customerName(), data.sellerId(), BigDecimal.ZERO);
+        User user = userService.getUserById(data.sellerId());
+        Sale sale = new Sale(data.customerName(), user);
         saleRepository.save(sale);
 
-        BigDecimal total = createSaleProducts(data, sale);
-        sale.setTotal(total);
+        List<SaleProduct> saleProducts = createSaleProducts(data.products(), sale);
+        sale.setSaleProducts(saleProducts);
+
         saleRepository.save(sale);
 
         return sale;
     }
 
-    public BigDecimal createSaleProducts(SaleDTO data, Sale sale) {
-        BigDecimal total = sale.getTotal();
+    public List<SaleProduct> createSaleProducts(Map<Long, Integer> products, Sale sale) {
+        BigDecimal total = BigDecimal.ZERO;
         List<SaleProduct> saleProducts = new ArrayList<>();
 
-        for (var entry : data.products().entrySet()) {
+        for (var entry : products.entrySet()) {
             SaleProduct saleProduct = createSaleProduct(entry.getKey(), entry.getValue(), sale);
-            saleProducts.add(saleProduct);
             total = total.add(saleProduct.getTotal());
+            saleProducts.add(saleProduct);
         }
 
-        saleProductRepository.saveAll(saleProducts);
-        return total;
+        sale.setTotal(total);
+        return saleProducts;
     }
 
     public SaleProduct createSaleProduct(Long productId, Integer quantity, Sale sale) {
         Product product = productService.getProductById(productId);
         BigDecimal price = product.getPrice();
-        return new SaleProduct(sale.getId(), product.getId(), price, quantity);
+        return new SaleProduct(sale, product, price, quantity);
     }
 }

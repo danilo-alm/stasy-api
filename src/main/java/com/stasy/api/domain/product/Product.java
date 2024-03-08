@@ -1,5 +1,7 @@
 package com.stasy.api.domain.product;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.stasy.api.domain.Views;
 import com.stasy.api.dtos.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
