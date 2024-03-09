@@ -83,4 +83,9 @@ public class SaleService {
         BigDecimal price = product.getPrice();
         return new SaleProduct(sale, product, price, quantity);
     }
+
+    public List<SaleProduct> getSaleProducts(Long saleId) {
+        Sale sale = this.getSaleById(saleId);
+        return sale.getSaleProducts();
+    }
 }

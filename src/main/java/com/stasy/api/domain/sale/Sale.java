@@ -44,6 +44,7 @@ public class Sale {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "id.sale", cascade = CascadeType.ALL)
+    @JsonView(Views.QueryingSalesWithProducts.class)
     private List<SaleProduct> saleProducts;
 
     public Sale(String customerName, User seller) {

@@ -3,6 +3,7 @@ package com.stasy.api.controllers.sale;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.stasy.api.domain.Views;
 import com.stasy.api.domain.sale.Sale;
+import com.stasy.api.domain.saleproduct.SaleProduct;
 import com.stasy.api.dtos.SaleDTO;
 import com.stasy.api.infra.ApiConstants;
 import com.stasy.api.services.sale.SaleService;
@@ -37,7 +38,8 @@ public class SaleController {
 //        return ResponseEntity.created(location).build();
 //    }
 
-    @GetMapping("/{id}")
+    @GetMapping(value="/{id}")
+    @JsonView(Views.QueryingSalesWithProducts.class)
     public ResponseEntity<Sale> getSaleById(@PathVariable Long id) {
         Sale sale = service.getSaleById(id);
         return ResponseEntity.ok().body(sale);

@@ -1,5 +1,7 @@
 package com.stasy.api.domain.saleproduct;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.stasy.api.domain.Views;
 import com.stasy.api.domain.product.Product;
 import com.stasy.api.domain.sale.Sale;
 import jakarta.persistence.*;
@@ -20,5 +22,6 @@ public class SaleProductKey implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID", nullable = false)
+    @JsonView(Views.QueryingSalesWithProducts.class)
     private Product product;
 }

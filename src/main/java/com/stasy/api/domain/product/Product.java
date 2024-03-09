@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(Views.QueryingSalesWithProducts.class)
     private Long id;
 
     @Column(name = "Name", nullable = false)
