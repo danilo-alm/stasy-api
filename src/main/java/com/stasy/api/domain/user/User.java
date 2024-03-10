@@ -1,5 +1,7 @@
 package com.stasy.api.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.stasy.api.domain.Views;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,10 +21,17 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JsonView(Views.QueryingSales.class)
     private String id;
+
+    @Column(name = "Login", nullable = false, unique = true)
     private String login;
+
+    @Column(name = "Password", nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "Role", nullable = false)
     private UserRole role;
 
     public User(String login, String password, UserRole role) {
