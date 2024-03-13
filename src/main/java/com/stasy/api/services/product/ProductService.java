@@ -33,14 +33,22 @@ public class ProductService {
         return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
-    public void updateProductQuantity(Long id, long quantity) {
-        Product product = getProductById(id);
+    public void updateProductQuantity(Long id, Long quantity) {
+        Product product = this.getProductById(id);
         product.setQuantity(quantity);
         repository.save(product);
     }
 
+    public long sellProducts(Long id, Long quantity) {
+        Product product = this.getProductById(id);
+        long newQuantity = product.getQuantity() - quantity;
+        product.setQuantity(newQuantity);
+        repository.save(product);
+        return newQuantity;
+    }
+
     public void updateProduct(Long id, ProductDTO data) {
-        Product product = getProductById(id);
+        Product product = this.getProductById(id);
         product.setName(data.name());
         product.setManufacturer(data.manufacturer());
         product.setPrice(data.price());

@@ -5,6 +5,7 @@ import com.stasy.api.domain.sale.Sale;
 import com.stasy.api.domain.saleproduct.SaleProduct;
 import com.stasy.api.domain.user.User;
 import com.stasy.api.dtos.SaleDTO;
+import com.stasy.api.dtos.UpdateSaleDTO;
 import com.stasy.api.repositories.SaleProductRepository;
 import com.stasy.api.repositories.SaleRepository;
 import com.stasy.api.services.product.ProductService;
@@ -62,6 +63,27 @@ public class SaleService {
         saleRepository.save(sale);
 
         return sale;
+    }
+
+    public Sale updateSale(UpdateSaleDTO data) {
+        User user = userService.getUserById(data.sellerId());
+
+        Sale oldSale = this.getSaleById(data.id());
+
+        Sale newSale = new Sale(data.customerName(), user);
+        List<SaleProduct> saleProducts = createSaleProducts(data.products(), newSale);
+
+        newSale.setId(data.id());
+        newSale.setSaleProducts(saleProducts);
+
+        saleRepository.delete(oldSale);
+        saleRepository.save(newSale);
+
+        return newSale;
+    }
+
+    public void deleteSale(Long id) {
+        saleRepository.deleteById(id);
     }
 
     public List<SaleProduct> createSaleProducts(Map<Long, Integer> products, Sale sale) {

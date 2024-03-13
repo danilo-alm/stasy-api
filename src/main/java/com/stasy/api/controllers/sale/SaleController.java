@@ -5,6 +5,7 @@ import com.stasy.api.domain.Views;
 import com.stasy.api.domain.sale.Sale;
 import com.stasy.api.domain.saleproduct.SaleProduct;
 import com.stasy.api.dtos.SaleDTO;
+import com.stasy.api.dtos.UpdateSaleDTO;
 import com.stasy.api.infra.ApiConstants;
 import com.stasy.api.services.sale.SaleService;
 import lombok.AllArgsConstructor;
@@ -31,12 +32,17 @@ public class SaleController {
         return ResponseEntity.created(location).build();
     }
 
-//    @PutMapping
-//    public ResponseEntity<Void> updateSale(@PathVariable Long id, @RequestBody SaleDTO data) {
-//        Sale newSale = service.createSale(data);
-//        URI location = URI.create(ApiConstants.PRODUCT_BASE_URI + "/" + newSale.getId());
-//        return ResponseEntity.created(location).build();
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateSale(@RequestBody UpdateSaleDTO data) {
+        service.updateSale(data);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSale(@PathVariable Long id) {
+        service.deleteSale(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping(value="/{id}")
     @JsonView(Views.QueryingSalesWithProducts.class)
