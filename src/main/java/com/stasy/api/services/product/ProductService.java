@@ -39,12 +39,16 @@ public class ProductService {
         repository.save(product);
     }
 
-    public long sellProducts(Long id, Long quantity) {
+    public void sellProducts(Long id, Long quantity) {
         Product product = this.getProductById(id);
-        long newQuantity = product.getQuantity() - quantity;
-        product.setQuantity(newQuantity);
+        product.setQuantity(product.getQuantity() - quantity);
         repository.save(product);
-        return newQuantity;
+    }
+
+    public void addProducts(Long id, Long quantity) {
+        Product product = this.getProductById(id);
+        product.setQuantity(product.getQuantity() + quantity);
+        repository.save(product);
     }
 
     public void updateProduct(Long id, ProductDTO data) {
@@ -57,12 +61,12 @@ public class ProductService {
         repository.save(product);
     }
 
-    public boolean existsById(Long id) {
-        return repository.existsById(id);
-    }
-
     public void deleteProduct(Long id) {
         repository.deleteById(id);
+    }
+
+    public Product getProductByBarcode(String barcode) {
+        return repository.findByBarcode(barcode).orElseThrow(() -> new ProductNotFoundException(barcode));
     }
 
     public List<Product> getProductByNameContains(String substring) {

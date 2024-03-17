@@ -5,14 +5,14 @@ import com.stasy.api.domain.Views;
 import com.stasy.api.domain.product.Product;
 import com.stasy.api.domain.sale.Sale;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Embeddable
 @NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"sale", "product"})
 public class SaleProductKey implements Serializable {

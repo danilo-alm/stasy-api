@@ -5,8 +5,6 @@ import com.stasy.api.domain.sale.Sale;
 import com.stasy.api.domain.saleproduct.SaleProduct;
 import com.stasy.api.domain.user.User;
 import com.stasy.api.dtos.SaleDTO;
-import com.stasy.api.dtos.UpdateSaleDTO;
-import com.stasy.api.repositories.SaleProductRepository;
 import com.stasy.api.repositories.SaleRepository;
 import com.stasy.api.services.product.ProductService;
 import com.stasy.api.services.user.UserService;
@@ -57,7 +55,14 @@ public class SaleService {
         Sale sale = new Sale(data.customerName(), user);
         saleRepository.save(sale);
 
-        List<SaleProduct> saleProducts = createSaleProducts(data.products(), sale);
+        List<SaleProduct> saleProducts;
+        try {
+            saleProducts = createSaleProducts(data.products(), sale);
+        } catch (RuntimeException e) {
+            saleRepository.delete(sale);
+            throw new RuntimeException(e.getMessage());
+        }
+
         sale.setSaleProducts(saleProducts);
 
         saleRepository.save(sale);
@@ -65,33 +70,17 @@ public class SaleService {
         return sale;
     }
 
-    public Sale updateSale(UpdateSaleDTO data) {
-        User user = userService.getUserById(data.sellerId());
-
-        Sale oldSale = this.getSaleById(data.id());
-
-        Sale newSale = new Sale(data.customerName(), user);
-        List<SaleProduct> saleProducts = createSaleProducts(data.products(), newSale);
-
-        newSale.setId(data.id());
-        newSale.setSaleProducts(saleProducts);
-
-        saleRepository.delete(oldSale);
-        saleRepository.save(newSale);
-
-        return newSale;
-    }
-
-    public void deleteSale(Long id) {
-        saleRepository.deleteById(id);
-    }
-
     public List<SaleProduct> createSaleProducts(Map<Long, Integer> products, Sale sale) {
         BigDecimal total = BigDecimal.ZERO;
         List<SaleProduct> saleProducts = new ArrayList<>();
 
         for (var entry : products.entrySet()) {
-            SaleProduct saleProduct = createSaleProduct(entry.getKey(), entry.getValue(), sale);
+            SaleProduct saleProduct;
+            try {
+                saleProduct = createSaleProduct(entry.getKey(), entry.getValue(), sale);
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e.getMessage());
+            }
             total = total.add(saleProduct.getTotal());
             saleProducts.add(saleProduct);
         }
@@ -102,12 +91,23 @@ public class SaleService {
 
     public SaleProduct createSaleProduct(Long productId, Integer quantity, Sale sale) {
         Product product = productService.getProductById(productId);
+
+        if (product.getQuantity() <  quantity) {
+            throw new RuntimeException("Not enough on stock for product with id " + productId);
+        }
+        productService.sellProducts(product.getId(), Long.valueOf(quantity));
+
         BigDecimal price = product.getPrice();
         return new SaleProduct(sale, product, price, quantity);
     }
 
-    public List<SaleProduct> getSaleProducts(Long saleId) {
-        Sale sale = this.getSaleById(saleId);
-        return sale.getSaleProducts();
+    public void deleteSale(Long id) {
+        Sale sale = this.getSaleById(id);
+        for (SaleProduct saleProduct : sale.getSaleProducts()) {
+            long productId = saleProduct.getId().getProduct().getId();
+            long quantity = saleProduct.getQuantity();
+            productService.addProducts(productId, quantity);
+        }
+        saleRepository.deleteById(id);
     }
 }

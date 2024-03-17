@@ -15,4 +15,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<List<Product>> findByQuantityGreaterThanEqual(long quantity);
     Optional<List<Product>> findByManufacturerContains(String substring);
     Optional<List<Product>> findByManufacturerContainsIgnoreCase(String substring);
+    Optional<Product> findByBarcode(String barcode);
 }

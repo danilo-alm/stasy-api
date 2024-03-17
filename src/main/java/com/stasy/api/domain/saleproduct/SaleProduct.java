@@ -27,7 +27,7 @@ public class SaleProduct {
 
     @Column(name = "Quantity", nullable = false)
     @JsonView(Views.QueryingSalesWithProducts.class)
-    private int quantity;
+    private long quantity;
 
     @Column(name = "UnitPrice", nullable = false)
     @JsonView(Views.QueryingSalesWithProducts.class)

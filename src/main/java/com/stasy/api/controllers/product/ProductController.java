@@ -55,6 +55,11 @@ public class ProductController {
         return ResponseEntity.ok().body(service.getProductById(id));
     }
 
+    @GetMapping("/barcode/{barcode}")
+    public ResponseEntity<Product> getProductByBarcode(@PathVariable String barcode) {
+        return ResponseEntity.ok().body(service.getProductByBarcode(barcode));
+    }
+
     @GetMapping("/name/{substring}")
     public ResponseEntity<List<Product>> getProductByNameContains(
       @PathVariable String substring,

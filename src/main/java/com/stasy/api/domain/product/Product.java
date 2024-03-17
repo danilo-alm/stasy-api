@@ -21,6 +21,9 @@ public class Product {
     @JsonView(Views.QueryingSalesWithProducts.class)
     private Long id;
 
+    @Column(name = "Barcode", nullable = false)
+    private String barcode;
+
     @Column(name = "Name", nullable = false)
     private String name;
 
@@ -39,9 +42,14 @@ public class Product {
 
     public Product(ProductDTO data) {
          this.name = data.name();
+         this.barcode = data.barcode();
          this.manufacturer = data.manufacturer();
          this.category = data.category();
          this.price = data.price();
          this.quantity = data.quantity();
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity < 0 ? 0 : quantity;
     }
 }

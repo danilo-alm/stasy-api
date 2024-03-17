@@ -3,7 +3,6 @@ package com.stasy.api.controllers.sale;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.stasy.api.domain.Views;
 import com.stasy.api.domain.sale.Sale;
-import com.stasy.api.domain.saleproduct.SaleProduct;
 import com.stasy.api.dtos.SaleDTO;
 import com.stasy.api.dtos.UpdateSaleDTO;
 import com.stasy.api.infra.ApiConstants;
@@ -14,10 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -30,12 +27,6 @@ public class SaleController {
         Sale newSale = service.createSale(data);
         URI location = URI.create(ApiConstants.PRODUCT_BASE_URI + "/" + newSale.getId());
         return ResponseEntity.created(location).build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateSale(@RequestBody UpdateSaleDTO data) {
-        service.updateSale(data);
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
