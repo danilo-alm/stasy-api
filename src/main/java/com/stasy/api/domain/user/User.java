@@ -21,10 +21,11 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @JsonView(Views.QueryingSales.class)
+    @JsonView({Views.QueryingSales.class, Views.QueryingUsers.class})
     private String id;
 
     @Column(name = "Login", nullable = false, unique = true)
+    @JsonView(Views.QueryingUsers.class)
     private String login;
 
     @Column(name = "Password", nullable = false)
@@ -32,6 +33,7 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Role", nullable = false)
+    @JsonView(Views.QueryingUsers.class)
     private UserRole role;
 
     public User(String login, String password, UserRole role) {
