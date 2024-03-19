@@ -55,6 +55,11 @@ public class ProductController {
         return ResponseEntity.ok().body(service.getProductById(id));
     }
 
+    @GetMapping("/categories")
+    public ResponseEntity<List<ProductCategory>> getProductCategories() {
+        return ResponseEntity.ok(List.of(ProductCategory.class.getEnumConstants()));
+    }
+
     @GetMapping("/barcode/{barcode}")
     public ResponseEntity<Product> getProductByBarcode(@PathVariable String barcode) {
         return ResponseEntity.ok().body(service.getProductByBarcode(barcode));
