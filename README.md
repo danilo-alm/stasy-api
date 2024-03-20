@@ -19,14 +19,11 @@ Este projeto foi desenvolvido como parte da disciplina de Engenharia de Software
 
 O projeto foi desenvolvido utilizando a metodologia XP (Extreme Programming), permitindo uma rápida identificação e adaptação a mudanças. Isso incluiu a produção de protótipos simples para verificação dos requisitos e realização de testes.
 
-## Implementação
-Falta inserir - padrão de projeto (implementado/utilizado), quais classes e seus propósitos, houve reuso de código?, foram feitas reaftorações
-
 ## Estrutura do Projeto
 
 O projeto está organizado em duas principais pastas:
 - `client`: Contém os arquivos do front-end.
-- `server`: Contém os arquivos do back-end.
+- `api`: Contém os arquivos do back-end.
 
 ## Como Usar
 
