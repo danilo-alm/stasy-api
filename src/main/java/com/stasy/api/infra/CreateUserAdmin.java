@@ -3,6 +3,7 @@ package com.stasy.api.infra;
 import com.stasy.api.domain.user.User;
 import com.stasy.api.domain.user.UserRole;
 import com.stasy.api.repositories.UserRepository;
+import com.stasy.api.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,11 @@ public class CreateUserAdmin {
     private static final Logger log = LoggerFactory.getLogger(CreateUserAdmin.class);
 
     @Bean
-    CommandLineRunner initDatabase(UserRepository repository) {
+    CommandLineRunner initDatabase(UserService userService) {
         return args -> {
-            if (repository.findAll().isEmpty()) {
+            if (userService.getAllUsers().isEmpty()) {
                 log.info("Creating admin user");
-                String encryptedPassword = new BCryptPasswordEncoder().encode(adminUserPassword);
-                repository.save(new User(adminUserName, encryptedPassword, UserRole.ADMIN));
+                userService.createUser(adminUserName, adminUserPassword, UserRole.ADMIN);
             } else log.info("Admin user already exists");
         };
     }
