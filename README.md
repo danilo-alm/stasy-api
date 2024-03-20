@@ -41,7 +41,7 @@ Para instalar o Node.js, visite [https://nodejs.org/](https://nodejs.org/) e sig
 1. Clone o repositório:
 
 ```bash
-... colocar quando tiver no github
+https://github.com/danilo-alm/stasy-api.git
 ```
 
 2. Navegue até a pasta api e construa a JAR do back-end:
