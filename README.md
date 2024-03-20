@@ -13,7 +13,7 @@ Este projeto foi desenvolvido como parte da disciplina de Engenharia de Software
 - **Banco de Dados:** MySQL(MariaDB)
 - **Controle de Versão:** Git e GitHub
 - **Contêinerização:** Docker, Docker Compose
-- **Inteligências Artificiais Utilizadas:** ?
+- **Inteligências Artificiais Utilizadas:** Github Copilot Copilot, ChatGPT
 
 ## Metodologia de Desenvolvimento
 
