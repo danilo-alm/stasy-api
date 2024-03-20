@@ -63,16 +63,6 @@ npm install
 npm start
 ```
 
-### Realizando Vendas
-
-#### Para realizar vendas, é necessário obter o hash do vendedor, que é gerado a cada nova instância do Docker. Para isso, siga os passos abaixo:
-
-1. Acesse http://localhost:8080/users para visualizar a lista de usuários.
-2. Copie o hash do usuário desejado.
-3. Cole o hash copiado no campo sellerId dentro do arquivo public/sales.html, substituindo o valor existente.
-
-O front-end será servido em http://localhost:3000. Para acessar a aplicação, abra seu navegador e digite localhost:3000.
-
 ## Desenvolvedores
 
 - Caio Teixeira
