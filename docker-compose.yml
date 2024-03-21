@@ -1,8 +1,19 @@
 version: '3'
 
 services:
+
+  mariadb:
+    image: mariadb:10.11
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: stasy
+    volumes:
+      - ./mariadb:/var/lib/mysql
+
   api:
-    build: .
+    build:
+      context: ./api
     ports:
       - "8080:8080"
     environment:
@@ -17,11 +28,11 @@ services:
     depends_on:
       - mariadb
 
-  mariadb:
-    image: mariadb:10.11
-    restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: root
-      MARIADB_DATABASE: stasy
-    volumes:
-      - ./mariadb:/var/lib/mysql
+  front:
+    build:
+      context: ./front
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
