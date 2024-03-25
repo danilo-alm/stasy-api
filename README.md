@@ -37,9 +37,6 @@ O projeto foi desenvolvido utilizando a metodologia XP (Extreme Programming), pe
 Atualmente, o sistema STASY está enfrentando alguns problemas conhecidos que impactam a funcionalidade de edição e remoção de produtos. Estamos trabalhando para resolver esses problemas e agradecemos a compreensão e paciência dos usuários.
 
 ### Bugs Atuais:
-
-- **Edição de Produtos:** No momento, não é possível editar as informações de produtos já cadastrados no sistema. Isso inclui atualizações em campos como nome, preço ou quantidade em estoque.
-
 - **Remoção de Produtos:** Produtos que foram vendidos (cadastrados em alguma venda) não podem ser removidos do sistema. Essa restrição foi implementada para manter a integridade dos dados de vendas, mas reconhecemos a necessidade de uma solução que permita a remoção de produtos de forma segura e estamos explorando alternativas para isso.
 
 ## Estrutura do Projeto
